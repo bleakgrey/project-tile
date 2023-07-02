@@ -1,0 +1,22 @@
+{
+  "name": "tic-tac-toe",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.3.2",
+    "vite-tsconfig-paths": "^4.2.0"
+  },
+  "dependencies": {
+    "gsap": "^3.11.5",
+    "pixi-spine": "^3.0.1",
+    "pixi-viewport": "^4.38.0",
+    "pixi.js": "^6.5.9"
+  }
+}
