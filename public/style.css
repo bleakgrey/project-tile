@@ -5,7 +5,7 @@ body {
   height: 100%;
   overflow: hidden !important;
   user-select: none;
-  background: #00c1ac;
+  /* background: #00c1ac; */
 }
 
 #app {
