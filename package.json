@@ -14,7 +14,10 @@
     "vite-tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
+    "eventemitter3": "^5.0.1",
     "gsap": "^3.11.5",
+    "nanoid": "^4.0.2",
+    "pixi-projection": "^0.4.4",
     "pixi-spine": "^3.0.1",
     "pixi-viewport": "^4.38.0",
     "pixi.js": "^6.5.9"

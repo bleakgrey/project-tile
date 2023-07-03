@@ -18,14 +18,14 @@ export default defineConfig({
         '**/*.atlas',
     ],
     esbuild: {
-        jsxInject: `import { jsx } from '@/engine/Helpers'`,
+        // jsxInject: `import { jsx } from '@/engine/Helpers'`,
     },
     build: {
         assetsInlineLimit: 0,
         assetsDir: './assets',
         outDir: '../dist',
         emptyOutDir: true,
-        // sourcemap: true,
+        sourcemap: true,
         rollupOptions: {
             output: {
                 assetFileNames: (asset) => {
