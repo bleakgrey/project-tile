@@ -1,15 +1,15 @@
 import { Action } from "./Action"
-import { Match } from "../Match"
-import { Player } from "../Player"
+import { LevelState } from "../LevelState"
+import { Character } from "../Character"
 
 type Payload = {
     cellIndex: number,
-    symbol: Player,
+    symbol: Character,
 }
 
-export class PlayerTurnAction extends Action<Match, Payload> {
+export class PlayerTurnAction extends Action<LevelState, Payload> {
 
-    public override canApply(state: Match): boolean {
+    public override canApply(state: LevelState): boolean {
         // Is this our turn?
         if (state.currentTurn != this.data.symbol)
             return false
@@ -22,7 +22,7 @@ export class PlayerTurnAction extends Action<Match, Payload> {
         return state.grid[this.data.cellIndex] == undefined
     }
 
-    public override apply(state: Match): void {
+    public override apply(state: LevelState): void {
         state.grid[this.data.cellIndex] = this.data.symbol
     }
 
