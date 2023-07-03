@@ -1,4 +1,4 @@
-import { MatchResult, Player, ResetAction } from "../match"
+import { MatchResult, Character, ResetAction } from "../level"
 import { SceneState } from "./SceneStates"
 import * as Strings from '@/assets/strings/en_US.json'
 import MainScene from "../Scene"
@@ -7,11 +7,11 @@ import gsap from 'gsap'
 type HeadingStyle = { text: string, font: string }
 
 const HEADINGS: { [key in MatchResult]: HeadingStyle } = {
-    [Player.CROSS]: {
+    [Character.PLAYER]: {
         text: Strings.cross_win,
         font: 'darkFont',
     },
-    [Player.CIRCLE]: {
+    [Character.ENEMY]: {
         text: Strings.circle_win,
         font: 'lightFont',
     },

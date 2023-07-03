@@ -1,9 +1,9 @@
-import { Player, PlayerTurnAction } from "../match"
+import { Character, PlayerTurnAction } from "../level"
 import { SceneState } from "./SceneStates"
 
 export class PlayerTurnState extends SceneState {
 
-    symbol = Player.CROSS
+    symbol = Character.PLAYER
     affectedCells = []
 
     canEnter() {

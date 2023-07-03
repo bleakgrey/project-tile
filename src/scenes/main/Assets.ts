@@ -1,29 +1,29 @@
-import GRID from '@/assets/images/playfield.png'
-import CELL from '@/assets/images/win_highlight.png'
-
 import LIGHT_FONT from '@/assets/fonts/lightFont.fnt?url'
 import LIGHT_FONT_PAGE from '@/assets/fonts/lightFont.png'
-import DARK_FONT from '@/assets/fonts/darkFont.fnt?url'
-import DARK_FONT_PAGE from '@/assets/fonts/darkFont.png?url'
 
-import CIRCLE from '@/assets/spines/circle.json?url'
-import CIRCLE_ATLAS from '@/assets/spines/circle.atlas?url'
-import CROSS from '@/assets/spines/cross.json?url'
-import CROSS_ATLAS from '@/assets/spines/cross.atlas?url'
-import SPINE_SPRITESHEET from '@/assets/spines/spine.png'
+import PLAYER_SPRITE from '@/assets/images/playerGreen.png?url'
+import ENEMY_SPRITE from '@/assets/images/playerPink.png?url'
+import SHADOW from '@/assets/images/shadow.png?url'
+
+import GRASS from '@/assets/images/grass_top.png?url'
+import TILE from '@/assets/images/dirt.png?url'
+import OBSTACLE from '@/assets/images/fence_wood.png?url'
+import VIGNETTE from '@/assets/images/vignette.png?url'
+
+import BOMB from '@/assets/images/bomb.png?url'
 
 export default {
-    GRID,
-    CELL,
-
     LIGHT_FONT,
     LIGHT_FONT_PAGE,
-    DARK_FONT,
-    DARK_FONT_PAGE,
 
-    SPINE_SPRITESHEET,
-    CIRCLE,
-    CIRCLE_ATLAS,
-    CROSS,
-    CROSS_ATLAS,
+    PLAYER_SPRITE,
+    ENEMY_SPRITE,
+    SHADOW,
+
+    GRASS,
+    TILE,
+    OBSTACLE,
+    VIGNETTE,
+
+    BOMB,
 }

@@ -5,7 +5,7 @@ export class SceneState implements State {
 
     protected scene: MainScene
     protected get match() {
-        return this.scene.match
+        return this.scene.level
     }
 
     constructor(scene: MainScene) {
