@@ -1,11 +1,12 @@
-import { Spine } from 'pixi-spine'
 import { DisplayObject, Loader, BitmapText, Texture } from 'pixi.js'
+
+export type NodeConstructor = (props: any, children: any[], refs: any) => DisplayObject
 
 // This namespace enables syntax highlighting for Typescript in VSCode
 declare global {
 	namespace JSX {
 		type Element = DisplayObject
-		interface ElementClass { }
+		type ElementClass = NodeConstructor
 	}
 }
 
@@ -15,25 +16,13 @@ export function getTexture(id: String): Texture {
 
 // This function is used to render scene views (.tsx files)
 export function jsx(
-	tag: JSX.ElementClass | any,
+	tag: JSX.ElementClass,
 	props: any,
 	...children: any[]
 ): DisplayObject {
-	// console.debug({ tag, props, children })
-
 	// Construct node from tag
-	let node
-	if (tag == BitmapText) {
-		node = new tag(props.text, props.style)
-	}
-	else if (tag == Spine) {
-		const resource = Loader.shared.resources[props.asset]
-		const spineData = resource.spineData
-		node = new tag(spineData)
-	}
-	else {
-		node = new tag()
-	}
+	if (!props) props = {}
+	let node: any = tag(props, children, props.refs || {})
 
 	// Apply props
 	for (const prop in props) {
@@ -41,12 +30,6 @@ export function jsx(
 		switch (prop) {
 			case "ref":
 				props.ref(node)
-				break
-			case "texture":
-				if (value instanceof Texture)
-					node[prop] = value
-				else
-					node[prop] = getTexture(value)
 				break
 			default:
 				node[prop] = value

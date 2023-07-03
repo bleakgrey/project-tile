@@ -9,7 +9,7 @@ export const gameInstance = new Game({
     resizeTo: window,
     antialias: true,
     autoDensity: true,
-    backgroundColor: 0x00c1ac,
+    backgroundColor: 0xEBF8FA,
     startScene: new MainScene(),
 })
 
