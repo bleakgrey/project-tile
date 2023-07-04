@@ -1,5 +1,11 @@
 {
-    "circle_win": "Circle Wins",
-    "cross_win": "Cross Wins",
-    "tie": "Tie"
+    "press_to_charge": "PRESS TO CHARGE",
+    "hold_it": "HOLD IT...",
+    "now": "!!! NOW !!!",
+    "too_late": "TOO LATE...",
+    "lost": "YOU LOST...",
+    "win": "YOU WON!",
+    "explosive_item": "Bomb",
+    "heavy_item": "Weight",
+    "useless_item": "Carrot"
 }
