@@ -1,13 +1,13 @@
 import { Action } from "./Action"
 import { EVENT_PROP_CHANGED, LevelState } from "../LevelState"
 
+export const EVENT_ENTITY_HURT = 'entityHurt'
+export const EVENT_ENTITY_DIED = 'entityDied'
+
 type Payload = {
     entityId: string,
     damage: number,
 }
-
-export const EVENT_ENTITY_HURT = 'entityHurt'
-export const EVENT_ENTITY_DIED = 'entityDied'
 
 export class HurtEntityAction extends Action<LevelState, Payload> {
 
