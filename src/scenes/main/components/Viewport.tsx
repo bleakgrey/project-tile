@@ -1,7 +1,6 @@
 import { Viewport as PixiViewport } from 'pixi-viewport'
 import { gameInstance } from '@'
 import { NodeConstructor } from '@/engine'
-import { Sprite, Texture } from 'pixi.js'
 
 export const Viewport: NodeConstructor = (props, children, refs) => {
     const view = new PixiViewport({
@@ -21,12 +20,6 @@ export const Viewport: NodeConstructor = (props, children, refs) => {
             gameInstance.config.baseHeight / 2,
         )
     })
-
-    // const filler = new Sprite(Texture.WHITE)
-    // filler.width = gameInstance.config.baseWidth
-    // filler.height = gameInstance.config.baseHeight
-    // filler.alpha = 0.1
-    // view.addChild(filler)
 
     return view
 }
