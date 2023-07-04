@@ -1,22 +1,13 @@
 import { saveStore, Scene, StateMachine, KnownStores } from '@/engine'
-import { Point, Sprite } from "pixi.js"
-import gsap from 'gsap'
-
-import { EntityIds, EVENT_PROP_CHANGED, LevelState } from "./level"
+import { Point } from "pixi.js"
+import { Tiles, PlaceTileAction, CameraState, EntityIds, EVENT_PROP_CHANGED, LevelState, PlaceEntityAction } from "./level"
 import { OpponentTurnState, PlayerTurnState, WinnerState } from './states'
-
+import { CharacterView } from './components/entities/CharacterView'
+import { ObstacleView } from './components/entities/ObstacleView'
 import View from "./View"
 import Assets from './Assets'
-import { PlaceTileAction } from './level/actions/PlaceTile'
-import { Tiles } from './level/Tiles'
-import { CameraState } from './level/CameraState'
-import { PlaceEntityAction } from './level/actions/PlaceEntity'
-import { CharacterView } from './components/entities/CharacterView'
-import { CrateView } from './components/entities/CrateView'
 
 export default class MainScene extends Scene {
-
-    public field: Sprite
 
     public level: LevelState
     private sm: StateMachine
@@ -25,6 +16,27 @@ export default class MainScene extends Scene {
         super(Assets, View)
         this.level = saveStore(KnownStores.LEVEL_STATE, this.createLevel())
         saveStore(KnownStores.CAMERA, new CameraState())
+    }
+
+    override onStart() {
+        super.onStart()
+
+        // Create a state machine to handle the gameplay logic
+        this.sm = new StateMachine([
+            new PlayerTurnState(this),
+            new OpponentTurnState(this),
+            new WinnerState(this),
+        ])
+
+        this.level.on(`${EVENT_PROP_CHANGED}`, this.onMatchChanged, this)
+        this.onMatchChanged()
+
+        // Present the game field to the player
+        // gsap.timeline().to(this.field, { alpha: 1, duration: 1, delay: 0.5 })
+    }
+
+    private onMatchChanged() {
+        this.sm.update()
     }
 
     private createLevel(): LevelState {
@@ -46,50 +58,38 @@ export default class MainScene extends Scene {
         }
 
         level.commit(new PlaceEntityAction({
-            coords: new Point(6, 4),
-            createRenderer: entity => CrateView({ entity })
+            id: EntityIds.ENEMY,
+            health: 2,
+            coords: new Point(2, 6),
+            data: {
+                color: 0xf19cb7,
+                texture: Assets.ENEMY_SPRITE,
+            },
+            createRenderer: entity => CharacterView({ entity })
         }))
-
-        level.commit(new PlaceEntityAction({
-            coords: new Point(6, 5),
-            createRenderer: entity => CrateView({ entity })
-        }))
-
         level.commit(new PlaceEntityAction({
             id: EntityIds.PLAYER,
             health: 20,
-            coords: new Point(2, 6),
-            createRenderer: entity => CharacterView({ entity })
-        }))
-        level.commit(new PlaceEntityAction({
-            id: EntityIds.ENEMY,
-            health: 20,
             coords: new Point(10, 6),
+            data: {
+                color: 0xffcc00,
+                texture: Assets.PLAYER_SPRITE,
+            },
             createRenderer: entity => CharacterView({ entity })
         }))
+
+        for (const offset of [...Array(3).keys()]) {
+            level.commit(new PlaceEntityAction({
+                coords: new Point(3, 5 + offset),
+                createRenderer: entity => ObstacleView({ entity })
+            }))
+            level.commit(new PlaceEntityAction({
+                coords: new Point(9, 5 + offset),
+                createRenderer: entity => ObstacleView({ entity })
+            }))
+        }
 
         return level
-    }
-
-    override onStart() {
-        super.onStart()
-
-        // Create a state machine to handle the gameplay logic
-        this.sm = new StateMachine([
-            // new PlayerTurnState(this),
-            // new OpponentTurnState(this),
-            // new WinnerState(this),
-        ])
-
-        this.level.on(`${EVENT_PROP_CHANGED}`, this.onMatchChanged, this)
-        this.onMatchChanged()
-
-        // Present the game field to the player
-        // gsap.timeline().to(this.field, { alpha: 1, duration: 1, delay: 0.5 })
-    }
-
-    private onMatchChanged() {
-        this.sm.update()
     }
 
 }

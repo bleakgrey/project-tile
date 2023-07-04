@@ -19,7 +19,7 @@ export class SceneManager extends Container {
         if (this.currentScene) {
             console.log(`Stopping scene ${this.currentScene.constructor.name}`)
             this.currentScene.onStop()
-            this.currentScene.parent.removeChild(this.currentScene)
+            this.removeChild(this.currentScene)
         }
 
         console.log(`Loading assets for ${scene.constructor.name}...`)

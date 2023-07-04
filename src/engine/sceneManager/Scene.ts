@@ -2,7 +2,7 @@ import { Container, DisplayObject, Loader } from 'pixi.js'
 
 export abstract class Scene extends Container {
 
-    protected view?: DisplayObject
+    public view?: DisplayObject
     protected viewCreator: (refs: any) => DisplayObject
     protected assets: any
 
@@ -18,18 +18,21 @@ export abstract class Scene extends Container {
     public async loadAssets() {
         return new Promise(resolve => {
             const loader = Loader.shared
-            loader.onComplete.add(() => resolve(true))
+            loader.onComplete.add(() => {
+                resolve(true)
+            })
 
             for (const url of Object.values(this.assets)) {
-                if (!url.includes('.atlas'))
+                if (!url.includes('.atlas') && Loader.shared.resources[url] == undefined) {
                     loader.add(url, url)
+                }
             }
             loader.load()
         })
     }
 
     public onStart() {
-        this.view = this.addChild(this.viewCreator(this))
+        this.view = this.addChild(this.viewCreator())
     }
     public onStop() { }
 
