@@ -8,13 +8,15 @@ import { LevelState } from './level'
 import { CameraState } from './level/CameraState'
 import gsap from 'gsap'
 
-export default (refs: any) => {
+export default () => {
+	const refs = {}
+
 	let rotationPlane
 
-	const level = getStore<LevelState>(KnownStores.LEVEL_STATE)
-	const camera = getStore<CameraState>(KnownStores.CAMERA)
+	const level: LevelState = getStore(KnownStores.LEVEL_STATE)
+	const camera: CameraState = getStore(KnownStores.CAMERA)
 
-	const view = <Viewport>
+	const view = <Viewport refs={refs}>
 		<Container ref={(n) => refs.world = n}
 			name={'World'}
 			scale={camera.scale}
@@ -24,7 +26,7 @@ export default (refs: any) => {
 			</Container>
 		</Container>
 
-		<UI />
+		<UI ref={(n) => refs.ui = n} />
 	</Viewport >
 
 	gameInstance.ticker.add(dt => {
@@ -43,8 +45,7 @@ export default (refs: any) => {
 		)
 	})
 
-	gsap.timeline({ repeat: -1, repeatDelay: 0 })
-		.to(camera, { angle: '+=360', duration: 10 })
-
+	refs.shootButton = refs.ui.refs.shoot
+	refs.heading = refs.ui.refs.heading
 	return view
 }
