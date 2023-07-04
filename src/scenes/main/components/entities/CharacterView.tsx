@@ -1,20 +1,16 @@
 import { gameInstance } from '@'
-import { getStore, jsx, KnownStores, lerpColor } from '@/engine'
+import { getStore, jsx, KnownStores, lerpColor, utils } from '@/engine'
 import { Container, Drawable, Sprite } from '@/engine/Nodes'
 import { AFFINE } from 'pixi-projection'
-import { LevelState } from '../../level'
-import { EVENT_ENTITY_HURT } from '../../level/actions/HurtEntity'
-import { CameraState } from '../../level/CameraState'
-import { Pivot } from '../Pivot'
+import { LevelState, EVENT_ENTITY_HURT, CameraState } from '../../level'
 import { gsap } from 'gsap'
-import { utils } from 'pixi.js'
 
 export function CharacterView(props: any) {
     const entity = props.entity
     const level: LevelState = getStore(KnownStores.LEVEL_STATE)
     const camera: CameraState = getStore(KnownStores.CAMERA)
 
-    let billboard, shadow
+    let billboard, sprite, shadow
 
     const view = <Sprite name={'Character'}>
         {/* <Pivot alpha={0.4} scale={{ x: 2, y: 2 }} /> */}
@@ -28,12 +24,12 @@ export function CharacterView(props: any) {
                 angle={160}
                 alpha={0.2}
             />
-            <Sprite ref={n => billboard = n}
-                name={'Sprite'}
-                texture={entity.data.texture}
-                affine={AFFINE.AXIS_X}
-                anchor={{ x: 0.5, y: 1 }}
-            >
+            <Sprite ref={n => billboard = n} affine={AFFINE.AXIS_X}>
+                <Sprite ref={n => sprite = n}
+                    name={'Sprite'}
+                    texture={entity.data.texture}
+                    anchor={{ x: 0.5, y: 1 }}
+                />
                 <HealthBar y={-200} entity={entity} />
             </Sprite>
         </Container>
@@ -45,14 +41,17 @@ export function CharacterView(props: any) {
             alpha: 0,
             duration: 0.25,
             onUpdate: () => {
-                billboard.tint = utils.string2hex(
+                sprite.tint = utils.string2hex(
                     lerpColor('#ffffff', '#ff0000', tint.alpha)
                 )
             }
         })
-
-
     })
+
+    const idleAnim = gsap.timeline({ repeat: -1, yoyo: true }).timeScale(0.5)
+        .to(sprite.scale, { y: '-=0.05' })
+        .to(shadow.scale, { y: '+=0.05' }, '<')
+        .seek(Math.random())
 
     gameInstance.ticker.add(dt => {
         // Always face to the camera for a billboard rendering style

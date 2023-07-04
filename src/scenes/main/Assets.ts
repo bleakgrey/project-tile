@@ -16,6 +16,7 @@ import CARROT from '@/assets/images/carrot.png?url'
 
 import SHOOT_ICON from '@/assets/images/icons/shoot.png?url'
 import ROTATE_ICON from '@/assets/images/icons/rotate.png?url'
+import TARGET_ICON from '@/assets/images/icons/target.png?url'
 
 export default {
     PRIDI,
@@ -36,4 +37,5 @@ export default {
 
     SHOOT_ICON,
     ROTATE_ICON,
+    TARGET_ICON,
 }

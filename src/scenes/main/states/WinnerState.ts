@@ -15,7 +15,7 @@ export class WinnerState extends SceneState {
 
     constructor(scene: MainScene) {
         super(scene)
-        this.heading = this.scene.view.refs.heading
+        this.heading = this.scene.view!.refs.ui.refs.heading
     }
 
     canEnter() {

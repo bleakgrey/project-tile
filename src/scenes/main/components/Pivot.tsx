@@ -1,5 +1,4 @@
-import { jsx } from '@/engine'
-import { Sprite } from '@/engine/Nodes'
+import { jsx, Sprite } from '@/engine'
 import { Texture } from 'pixi.js'
 
 export function Pivot(props) {

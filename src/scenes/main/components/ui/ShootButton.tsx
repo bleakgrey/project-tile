@@ -1,6 +1,6 @@
 import { gameInstance } from "@"
-import { jsx, lerpColor, Label, Rope, Sprite } from "@/engine"
-import { BitmapText, Point, RenderTexture, SimpleRope, Texture, utils } from "pixi.js"
+import { jsx, lerpColor, Label, Rope, Sprite, utils } from "@/engine"
+import { BitmapText, Point, RenderTexture, SimpleRope, Texture } from "pixi.js"
 import { gsap, Linear } from 'gsap'
 import { Sprite2d } from "pixi-projection"
 import Assets from "../../Assets"
@@ -9,7 +9,7 @@ export function ShootButton(props: any) {
     let label: BitmapText, rope: SimpleRope, fill: Sprite2d
 
     let points = []
-    const radius = 120
+    const radius = 130
     const maxRopePoints = 100
     const step = Math.PI / maxRopePoints
     const texture = RenderTexture.create({ width: 512 })

@@ -44,8 +44,5 @@ export default () => {
 			gameInstance.config.baseHeight / 2,
 		)
 	})
-
-	refs.shootButton = refs.ui.refs.shoot
-	refs.heading = refs.ui.refs.heading
 	return view
 }

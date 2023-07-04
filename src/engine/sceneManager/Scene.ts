@@ -2,7 +2,7 @@ import { Container, DisplayObject, Loader } from 'pixi.js'
 
 export abstract class Scene extends Container {
 
-    public view?: DisplayObject
+    public view?: any
     protected viewCreator: (refs: any) => DisplayObject
     protected assets: any
 

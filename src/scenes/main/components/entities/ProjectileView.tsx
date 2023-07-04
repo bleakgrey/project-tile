@@ -1,21 +1,18 @@
-import { getStore, jsx, KnownStores } from '@/engine'
-import { Container, Sprite } from '@/engine/Nodes'
-import { AFFINE } from 'pixi-projection'
-import Assets from '../../Assets'
-import { LevelState } from '../../level'
+import { getStore, jsx, KnownStores, Sprite, Container } from '@/engine'
+import { AFFINE, Sprite2d } from 'pixi-projection'
 import { gsap, Linear, Power1 } from 'gsap'
 import { Point } from 'pixi.js'
-import { Pivot } from '../Pivot'
-import { HurtEntityAction } from '../../level/actions/HurtEntity'
+import { LevelState, HurtEntityAction, Item } from '../../level'
+import Assets from '../../Assets'
 
 export function ProjectileView(props: any) {
-    let billboard, shadow
+    let billboard!: Sprite2d, shadow!: Sprite2d
 
     const level: LevelState = getStore(KnownStores.LEVEL_STATE)
     const destination: Point = props.entity.data.destination
+    const item: Item = props.entity.data.item
 
     const view = <Sprite name={'Projectile'}>
-        {/* <Pivot /> */}
         <Container x={level.CELL_SIZE / 2} y={level.CELL_SIZE / 2} scale={{ x: 1, y: 1 }}>
             <Sprite ref={n => shadow = n}
                 texture={Assets.SHADOW}
@@ -27,11 +24,10 @@ export function ProjectileView(props: any) {
             <Container affine={AFFINE.AXIS_X}>
                 <Sprite ref={n => billboard = n}
                     y={-25}
-                    texture={Assets.BOMB}
+                    texture={item.texture}
                     anchor={{ x: 0.5, y: 0.5 }}
                     scale={{ x: 0.2, y: 0.2 }}
                     affine={AFFINE.POINT}
-                    angle={45}
                 />
             </Container>
         </Container >
@@ -44,7 +40,7 @@ export function ProjectileView(props: any) {
         level.getEntitiesAtCoords(coords).forEach(entity => level.commit(
             new HurtEntityAction({
                 entityId: entity.id,
-                damage: 1,
+                damage: item.damage,
             }))
         )
 

@@ -1,19 +1,19 @@
 import { Container, getTexture, jsx, Label, Sprite } from '@/engine'
-import Assets from '../../Assets'
-import * as Strings from '@/assets/strings/en_US.json'
 import { DisplayObject } from 'pixi.js'
 import { gsap } from 'gsap'
+import Assets from '../../Assets'
+import * as Strings from '@/assets/strings/en_US.json'
 
 export function Selector(props: any) {
-    let activeChild: DisplayObject
+    let activeItem: DisplayObject
 
     const getActive = () => {
-        return view.children.filter(child => child.isSelected)
+        return activeItem
     }
     const setActive = (active: DisplayObject) => {
-        activeChild = active
+        activeItem = active.data
         view.children.forEach(child => {
-            child.setActive(child == activeChild)
+            child.setActive(child == active)
         })
     }
     const view = <Container getActive={getActive} setActive={setActive} />

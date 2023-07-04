@@ -15,9 +15,6 @@ export class Item {
     // What tiles will this item affect?
     range: Point[] = [new Point(0, 0)]
 
-    // How long should the player hold the throw button for?
-    timeScale: number = 1
-
     constructor(config: Partial<Item>) {
         Object.assign(this, config)
     }

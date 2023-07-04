@@ -7,7 +7,7 @@ import { RotateButton } from './RotateButton'
 
 export function UI() {
     const refs = {
-        items: null,
+        selector: null,
         shoot: null,
         heading: null,
     }
@@ -20,7 +20,7 @@ export function UI() {
         /> */}
 
         <RotateButton x={140} y={180} />
-        <Selector ref={(n) => refs.items = n} items={Object.values(ItemRegistry)} />
+        <Selector ref={(n) => refs.selector = n} items={Object.values(ItemRegistry)} />
         <ShootButton ref={(n) => refs.shoot = n} />
         <Label ref={(n) => refs.heading = n}
             x={1920 / 2}
@@ -32,7 +32,7 @@ export function UI() {
     </Container>
 
     const resize = () => {
-        refs.items.position.set(
+        refs.selector.position.set(
             (gameInstance.config.baseWidth - 200),
             (gameInstance.config.baseHeight / 2) - 350,
         )

@@ -1,18 +1,17 @@
-import { ChangeTurnAction, EntityIds } from "../level"
-import { SceneState } from "./SceneStates"
-import { gsap, Elastic, Linear, Cubic } from 'gsap'
-import { DisplayObject, Point } from "pixi.js"
-import * as Strings from '@/assets/strings/en_US.json'
-import { PlaceEntityAction } from "../level/actions/PlaceEntity"
-import { ProjectileView } from "../components/entities/ProjectileView"
-import { EVENT_ENTITY_HURT } from "../level/actions/HurtEntity"
 import { lerp } from "@/engine"
+import { DisplayObject, Point } from "pixi.js"
+import { gsap, Elastic, Linear, Cubic } from 'gsap'
+import { ChangeTurnAction, EntityIds, PlaceEntityAction, EVENT_ENTITY_HURT } from "../level"
+import { SceneState } from "./SceneStates"
+import { ProjectileView } from "../components/entities/ProjectileView"
+import MainScene from "../Scene"
+import * as Strings from '@/assets/strings/en_US.json'
 
 export class PlayerTurnState extends SceneState {
     btn: DisplayObject
+    selector: any
     bounceAnim: GSAPAnimation
     chargeAnim: GSAPAnimation
-
     charger = {
         power: 0,
         timeScale: 0.5,
@@ -23,12 +22,17 @@ export class PlayerTurnState extends SceneState {
         },
     }
 
+    constructor(scene: MainScene) {
+        super(scene)
+        this.btn = this.scene.view!.refs.ui.refs.shoot
+        this.selector = this.scene.view!.refs.ui.refs.selector
+    }
+
     canEnter() {
         return this.level?.currentTurn == EntityIds.PLAYER
     }
 
     onEnter() {
-        this.btn = this.scene.view.refs.shootButton
         gsap.timeline()
             .call(() => {
                 this.btn.setText(Strings.press_to_charge)
@@ -77,11 +81,11 @@ export class PlayerTurnState extends SceneState {
         // console.debug('pointer up')
 
         this.btn.buttonMode = false
-        this.btn.setText('')
         this.btn.removeAllListeners('pointerdown')
         this.btn.removeAllListeners('pointerover')
         this.btn.removeAllListeners('pointerout')
 
+        this.chargeAnim.pause()
         this.bounceAnim.kill()
         gsap.timeline()
             .to(this.btn.scale, { x: 0, y: 0, duration: 0.5, ease: Elastic.easeInOut })
@@ -94,11 +98,10 @@ export class PlayerTurnState extends SceneState {
     }
 
     launch() {
+        const enemyCoords = this.level.entities[EntityIds.ENEMY].coords
         const startPos = this.level.tileToPos(
             this.level.entities[EntityIds.PLAYER].coords,
         )
-
-        const enemyCoords = this.level.entities[EntityIds.ENEMY].coords
         const endPos = this.level.tileToPos(
             new Point(
                 enemyCoords.x,
@@ -106,17 +109,17 @@ export class PlayerTurnState extends SceneState {
             )
         )
 
-        console.warn(this.charger.power)
+        const item = this.selector.getActive()
+        const power = this.charger.power * item.lightness
+        const destination = new Point(
+            lerp(startPos.x, endPos.x, power),
+            lerp(startPos.y, endPos.y, power),
+        )
         this.level.commit(new PlaceEntityAction({
             id: EntityIds.PROJECTILE,
             coords: this.level.entities[EntityIds.PLAYER].coords,
             health: 1,
-            data: {
-                destination: new Point(
-                    lerp(startPos.x, endPos.x, this.charger.power),
-                    lerp(startPos.y, endPos.y, this.charger.power),
-                )
-            },
+            data: { item, destination },
             createRenderer: entity => ProjectileView({ entity })
         }))
     }
@@ -124,11 +127,12 @@ export class PlayerTurnState extends SceneState {
     onDamaged() {
         setTimeout(() => {
             this.level.commit(new ChangeTurnAction(null))
-        }, 2000)
+        }, 1000)
     }
 
     onLeave() {
-
+        this.bounceAnim.kill()
+        this.chargeAnim.kill()
     }
 
 }

@@ -3,9 +3,8 @@ import { getStore, jsx, NodeConstructor, KnownStores } from '@/engine'
 import { Label, Sprite } from '@/engine/Nodes'
 import { Container2d } from 'pixi-projection'
 import { DisplayObject } from 'pixi.js'
-import Assets from '../Assets'
 import { EVENT_PROP_CHANGED, LevelState } from '../level'
-import { Pivot } from './Pivot'
+import Assets from '../Assets'
 
 export const GridMap: NodeConstructor = (props, children, refs) => {
     const node = new Container2d()

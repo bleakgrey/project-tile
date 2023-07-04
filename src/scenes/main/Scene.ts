@@ -9,7 +9,7 @@ import Assets from './Assets'
 
 export default class MainScene extends Scene {
 
-    public level: LevelState
+    private level: LevelState
     private sm: StateMachine
 
     constructor() {
@@ -59,7 +59,7 @@ export default class MainScene extends Scene {
 
         level.commit(new PlaceEntityAction({
             id: EntityIds.ENEMY,
-            health: 2,
+            health: 9,
             coords: new Point(2, 6),
             data: {
                 color: 0xf19cb7,
@@ -69,7 +69,7 @@ export default class MainScene extends Scene {
         }))
         level.commit(new PlaceEntityAction({
             id: EntityIds.PLAYER,
-            health: 20,
+            health: 9,
             coords: new Point(10, 6),
             data: {
                 color: 0xffcc00,
