@@ -11,7 +11,7 @@ export class Tile {
 
 }
 
-export const Tiles = {
+export const Tiles: { [id: string]: Tile } = {
     DEFAULT: new Tile({
         texture: Assets.GRASS,
         tint: 0xffffff,

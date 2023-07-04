@@ -18,16 +18,16 @@ export class StateMachine {
             }
         }
 
-        if (newState != this.currentState) {
+        if (newState != this.currentState && newState != undefined) {
             if (this.currentState) {
-                // console.log(`Leaving state: ${this.currentState.constructor.name}`)
+                console.debug(`Leaving state: ${this.currentState.constructor.name}`)
                 this.currentState.onLeave()
             }
 
             if (newState != undefined) {
-                // console.log(`Entering state: ${newState.constructor.name}`)
-                newState.onEnter()
+                console.debug(`Entering state: ${newState.constructor.name}`)
                 this.currentState = newState
+                newState.onEnter()
             }
         }
     }

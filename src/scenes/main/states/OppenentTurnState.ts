@@ -1,22 +1,19 @@
 import { SceneState } from "./SceneStates"
-import { Character } from "../level"
 import MainScene from "../Scene"
+import { ChangeTurnAction, EntityIds } from "../level"
 
 export class OpponentTurnState extends SceneState {
-
-    symbol = Character.ENEMY
-    opponent = Character.PLAYER
 
     constructor(scene: MainScene) {
         super(scene)
     }
 
     canEnter() {
-        return this.match?.currentTurn == this.symbol
+        return this.level?.currentTurn == EntityIds.ENEMY
     }
 
     onEnter() {
-
+        this.level.commit(new ChangeTurnAction(null))
     }
 
 }

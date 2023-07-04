@@ -4,7 +4,7 @@ import MainScene from "../Scene"
 export class SceneState implements State {
 
     protected scene: MainScene
-    protected get match() {
+    protected get level() {
         return this.scene.level
     }
 
