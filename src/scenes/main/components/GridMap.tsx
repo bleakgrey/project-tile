@@ -1,16 +1,25 @@
 import { gameInstance } from '@'
 import { getStore, jsx, NodeConstructor, KnownStores } from '@/engine'
-import { Label, Sprite } from '@/engine/Nodes'
+import { Container, Label, Sprite } from '@/engine/Nodes'
 import { Container2d } from 'pixi-projection'
 import { DisplayObject } from 'pixi.js'
 import { EVENT_PROP_CHANGED, LevelState } from '../level'
 import Assets from '../Assets'
 
 export const GridMap: NodeConstructor = (props, children, refs) => {
-    const node = new Container2d()
-
     const entityRenderers: DisplayObject[] = []
     const level: LevelState = getStore(KnownStores.LEVEL_STATE)
+
+    const node = <Container refs={refs}>
+        <Container ref={n => refs.tileLayer = n} alpha={0} />
+        <Sprite ref={n => refs.vignetteLayer = n}
+            texture={Assets.VIGNETTE}
+            width={level.GRID_SIZE * level.CELL_SIZE}
+            height={level.GRID_SIZE * level.CELL_SIZE}
+            tint={gameInstance.config.backgroundColor}
+        />
+        <Container ref={n => refs.entityLayer = n} alpha={0} sortableChildren={true} />
+    </Container>
 
     // Construct level gridmap
     for (const id of Object.keys(level.tiles)) {
@@ -18,22 +27,13 @@ export const GridMap: NodeConstructor = (props, children, refs) => {
         const { x, y } = level.tileToPos(coords)
         const { texture, tint } = level.tiles[id]
 
-        node.addChild(
+        refs.tileLayer.addChild(
             <Sprite x={x} y={y} texture={texture} tint={tint}>
                 {/* <Pivot /> */}
                 {/* <Label text={level.getTileId(coords)} /> */}
             </Sprite>
         )
     }
-
-    node.addChild(<Sprite texture={Assets.VIGNETTE}
-        width={level.GRID_SIZE * level.CELL_SIZE}
-        height={level.GRID_SIZE * level.CELL_SIZE}
-        tint={gameInstance.config.backgroundColor}
-    />)
-
-    const entityContainer = node.addChild(new Container2d())
-    entityContainer.sortableChildren = true
 
     const onEntitiesChanged = () => {
         // If this entity is not yet placed on the gridmap, do it now
@@ -47,7 +47,7 @@ export const GridMap: NodeConstructor = (props, children, refs) => {
                 const pos = level.tileToPos(entity.coords)
                 renderer.position.set(pos.x, pos.y)
 
-                entityContainer.addChild(renderer)
+                refs.entityLayer.addChild(renderer)
                 // console.debug('Created an entity renderer:', renderer.proj)
             }
         }
@@ -69,7 +69,7 @@ export const GridMap: NodeConstructor = (props, children, refs) => {
 
     // Sort entities by depth
     gameInstance.ticker.add(dt => {
-        for (const c of entityContainer.children) {
+        for (const c of refs.entityLayer.children) {
             c.zIndex = c.getGlobalPosition().y
         }
     })
