@@ -3,9 +3,7 @@ import { EventEmitter } from 'eventemitter3'
 import { Action, ChangeTurnAction, CheckWinnerAction, PlayerTurnAction } from './actions'
 import { Tile } from "./Tiles"
 import { Entity, EntityIds } from "./entities"
-
-const CHANGE_TURN = new ChangeTurnAction(null)
-const CHECK_WINNER = new CheckWinnerAction(null)
+import { HurtEntityAction } from "./actions/HurtEntity"
 
 export const EVENT_PROP_CHANGED = 'propChanged'
 
@@ -56,9 +54,8 @@ export class LevelState extends EventEmitter {
     }
 
     public onActionApplied(action: Action<this, any>) {
-        if (action instanceof PlayerTurnAction) {
-            this.commit(CHECK_WINNER)
-            this.commit(CHANGE_TURN)
+        if (action instanceof HurtEntityAction) {
+            this.commit(new CheckWinnerAction(null))
         }
     }
 
@@ -80,6 +77,10 @@ export class LevelState extends EventEmitter {
             parseInt(parts[0]),
             parseInt(parts[1]),
         )
+    }
+
+    public getEntitiesAtCoords(coords: Point) {
+        return Object.values(this.entities).filter(e => e.coords.equals(coords))
     }
 
 }

@@ -10,8 +10,8 @@ export enum EntityIds {
 
 export class Entity {
 
-    public id: string = null
-    public renderer: DisplayObject = null
+    public id!: string
+    public renderer!: DisplayObject
 
     public data: any = null
     public health: number = -1
