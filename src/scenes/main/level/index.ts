@@ -1,6 +1,6 @@
 export * from './LevelState'
 export * from './actions'
 export * from './entities'
-export * from './Tiles'
+export * from './tiles'
 export * from './CameraState'
 export * from './items'

@@ -1,6 +1,6 @@
 import { saveStore, Scene, StateMachine, KnownStores } from '@/engine'
 import { Point } from "pixi.js"
-import { Tiles, PlaceTileAction, CameraState, EntityIds, EVENT_PROP_CHANGED, LevelState, PlaceEntityAction } from "./level"
+import { TileRegistry, PlaceTileAction, CameraState, EntityIds, EVENT_PROP_CHANGED, LevelState, PlaceEntityAction } from "./level"
 import { OpponentTurnState, PlayerTurnState, WinnerState } from './states'
 import { CharacterView } from './components/entities/CharacterView'
 import { ObstacleView } from './components/entities/ObstacleView'
@@ -49,7 +49,7 @@ export default class MainScene extends Scene {
         */
         for (const x of [...Array(level.GRID_SIZE).keys()]) {
             for (const y of [...Array(level.GRID_SIZE).keys()]) {
-                const tile = (x + y) % 2 == 0 ? Tiles.ALTERNATE : Tiles.DEFAULT
+                const tile = (x + y) % 2 == 0 ? TileRegistry.ALTERNATE : TileRegistry.DEFAULT
                 level.commit(new PlaceTileAction({
                     cell: new Point(x, y),
                     tile,

@@ -1,7 +1,7 @@
 import { Point } from "pixi.js"
 import { EventEmitter } from 'eventemitter3'
-import { Action, ChangeTurnAction, CheckWinnerAction, PlayerTurnAction } from './actions'
-import { Tile } from "./Tiles"
+import { Action, CheckWinnerAction } from './actions'
+import { Tile } from "./tiles"
 import { Entity, EntityIds } from "./entities"
 import { HurtEntityAction } from "./actions/HurtEntity"
 

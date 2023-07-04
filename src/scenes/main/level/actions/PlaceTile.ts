@@ -1,7 +1,7 @@
 import { Action } from "./Action"
 import { LevelState } from "../LevelState"
 import { Point } from "pixi.js"
-import { Tile } from "../Tiles"
+import { Tile } from "../tiles"
 
 type Payload = {
     cell: Point,
