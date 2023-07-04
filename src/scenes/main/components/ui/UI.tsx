@@ -31,10 +31,14 @@ export function UI() {
         />
     </Container>
 
+    refs.selector.pivot.set(
+        refs.selector.width / 2,
+        refs.selector.height / 2,
+    )
     const resize = () => {
         refs.selector.position.set(
-            (gameInstance.config.baseWidth - 200),
-            (gameInstance.config.baseHeight / 2) - 350,
+            (gameInstance.config.baseWidth - 100),
+            (gameInstance.config.baseHeight / 2) - 125,
         )
         refs.shoot.position.set(
             (gameInstance.config.baseWidth - 200),

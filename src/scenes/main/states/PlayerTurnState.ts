@@ -35,10 +35,13 @@ export class PlayerTurnState extends SceneState {
     onEnter() {
         gsap.timeline()
             .call(() => {
+                this.selector.interactiveChildren = true
                 this.btn.setText(Strings.press_to_charge)
                 this.btn.setFill(0)
             })
             .fromTo(this.btn.scale, { x: 0, y: 0 }, { x: 1, y: 1 })
+            .fromTo(this.selector, { alpha: 0 }, { alpha: 1 }, '<')
+            .fromTo(this.selector.scale, { x: 0.8, y: 0.8 }, { x: 1, y: 1 }, '<')
             .set(this.btn, {
                 interactive: true,
                 buttonMode: true,
@@ -79,16 +82,19 @@ export class PlayerTurnState extends SceneState {
     }
     onPointerUp() {
         // console.debug('pointer up')
-
-        this.btn.buttonMode = false
-        this.btn.removeAllListeners('pointerdown')
-        this.btn.removeAllListeners('pointerover')
-        this.btn.removeAllListeners('pointerout')
-
-        this.chargeAnim.pause()
-        this.bounceAnim.kill()
         gsap.timeline()
+            .call(() => {
+                this.selector.interactiveChildren = false
+                this.btn.buttonMode = false
+                this.btn.removeAllListeners('pointerdown')
+                this.btn.removeAllListeners('pointerover')
+                this.btn.removeAllListeners('pointerout')
+                this.chargeAnim.pause()
+                this.bounceAnim.kill()
+            })
             .to(this.btn.scale, { x: 0, y: 0, duration: 0.5, ease: Elastic.easeInOut })
+            .to(this.selector, { alpha: 0 }, '<')
+            .to(this.selector.scale, { x: 0.8, y: 0.8 }, '<')
             .call(() => {
                 this.charger.reset()
                 this.chargeAnim.kill()

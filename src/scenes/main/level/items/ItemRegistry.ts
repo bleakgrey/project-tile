@@ -18,7 +18,7 @@ export const ItemRegistry = {
     USELESS_ITEM: new Item({
         name: 'useless_item',
         texture: Assets.CARROT,
-        damage: 0,
+        damage: 1,
     }),
     HEAVY_ITEM: new Item({
         name: 'heavy_item',
