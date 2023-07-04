@@ -21,13 +21,16 @@ export default () => {
 			name={'World'}
 			scale={camera.scale}
 		>
-			<Container ref={(n) => rotationPlane = n} angle={camera.angle}>
+			<Container ref={(n) => rotationPlane = n} angle={camera.angle} y={100} alpha={0}>
 				<GridMap />
 			</Container>
 		</Container>
 
 		<UI ref={(n) => refs.ui = n} />
 	</Viewport >
+
+	refs.showAnim = gsap.timeline()
+		.to(rotationPlane, { alpha: 1, y: 0 })
 
 	gameInstance.ticker.add(dt => {
 		for (const node of [rotationPlane]) {

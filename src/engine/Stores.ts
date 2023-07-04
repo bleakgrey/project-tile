@@ -8,12 +8,12 @@ export const KnownStores = {
 const savedStores: { [id: string]: any } = {}
 
 export function saveStore<T>(id: string, store: T): T {
-    console.debug('Save store:', id)
+    // console.debug('Save store:', id)
     savedStores[id] = store
     return store
 }
 
 export function getStore<T>(id: string): T {
-    console.debug('Get store:', id)
+    // console.debug('Get store:', id)
     return savedStores[id]
 }

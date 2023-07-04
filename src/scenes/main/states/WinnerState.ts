@@ -32,11 +32,12 @@ export class WinnerState extends SceneState {
                 { alpha: 0, x: '-=100' },
                 { alpha: 1, x: '+=100' },
             )
+            .add(this.scene.view.refs.showAnim.reverse(), '+=2')
             .to(this.heading, {
                 alpha: 0,
                 x: '+=100',
                 delay: 0.2,
-            }, '+=2')
+            })
             .call(() => {
                 gameInstance.sceneManager.emit(SceneManager.CHANGE_EVENT, new MainScene())
             })

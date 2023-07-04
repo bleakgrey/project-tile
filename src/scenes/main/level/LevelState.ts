@@ -1,9 +1,8 @@
 import { Point } from "pixi.js"
 import { EventEmitter } from 'eventemitter3'
-import { Action, CheckWinnerAction } from './actions'
+import { Action, CheckWinnerAction, HurtEntityAction } from './actions'
 import { Tile } from "./tiles"
 import { Entity, EntityIds } from "./entities"
-import { HurtEntityAction } from "./actions/HurtEntity"
 
 export const EVENT_PROP_CHANGED = 'propChanged'
 
