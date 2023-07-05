@@ -2,10 +2,10 @@ import { AFFINE, Sprite2d } from 'pixi-projection'
 import { gsap, Linear, Power1 } from 'gsap'
 import { Point } from 'pixi.js'
 import { getStore, jsx, KnownStores, Sprite, Container } from '@/engine'
-import { LevelState, HurtEntityAction, Item } from '../../level'
+import { LevelState, HurtEntityAction } from '../../level'
 import { EVENT_SPAWN_EFFECT } from '../Effect'
-import Assets from '../../Assets'
 import { EVENT_HIGHLIGHT_TILE } from '../GridMap'
+import Assets from '../../Assets'
 
 export function ProjectileView(props: any) {
     let billboard!: Sprite2d, shadow!: Sprite2d

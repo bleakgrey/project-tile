@@ -1,8 +1,8 @@
 import { jsx, Sprite, Container, getStore, KnownStores } from "@/engine"
 import { gsap } from 'gsap'
 import { Sprite2d } from "pixi-projection"
-import Assets from "../../Assets"
 import { CameraState } from "../../level"
+import Assets from "../../Assets"
 
 export function RotateButton() {
     let icon: Sprite2d

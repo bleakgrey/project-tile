@@ -1,5 +1,5 @@
 import { lerp } from "@/engine"
-import { BitmapText, DisplayObject, Point } from "pixi.js"
+import { Point } from "pixi.js"
 import { gsap, Elastic, Linear } from 'gsap'
 import { ChangeTurnAction, EntityIds, PlaceEntityAction, EVENT_ENTITY_HURT } from "../level"
 import { SceneState } from "./SceneStates"

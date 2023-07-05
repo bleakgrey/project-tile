@@ -1,6 +1,6 @@
 import { gameInstance } from '@'
 import { jsx, Container, Label, Sprite } from '@/engine'
-import { ItemRegistry } from '../../level/items/ItemRegistry.tsx'
+import { ItemRegistry } from '../../level/items/ItemRegistry'
 import { ShootButton } from './ShootButton'
 import { Selector } from './Selector'
 import { RotateButton } from './RotateButton'

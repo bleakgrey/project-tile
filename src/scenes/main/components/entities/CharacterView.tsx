@@ -3,7 +3,6 @@ import { getStore, jsx, KnownStores, lerpColor, utils, Container, Drawable, Spri
 import { AFFINE } from 'pixi-projection'
 import { LevelState, EVENT_ENTITY_HURT, CameraState } from '../../level'
 import { gsap } from 'gsap'
-import { Effect } from '../Effect'
 
 export function CharacterView(props: any) {
     const entity = props.entity
