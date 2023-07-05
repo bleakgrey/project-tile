@@ -1,5 +1,7 @@
-import { Point } from "pixi.js"
+import { DisplayObject, Point } from "pixi.js"
 import Assets from "../../Assets"
+
+type EffectConstructor = () => DisplayObject | null
 
 export class Item {
 
@@ -14,6 +16,9 @@ export class Item {
 
     // What tiles will this item affect?
     range: Point[] = [new Point(0, 0)]
+
+    // What effect should be shown on impact?
+    getImpactEffect: EffectConstructor = () => null
 
     constructor(config: Partial<Item>) {
         Object.assign(this, config)

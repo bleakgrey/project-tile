@@ -1,8 +1,9 @@
-import { getStore, jsx, KnownStores, Sprite, Container } from '@/engine'
 import { AFFINE, Sprite2d } from 'pixi-projection'
 import { gsap, Linear, Power1 } from 'gsap'
 import { Point } from 'pixi.js'
+import { getStore, jsx, KnownStores, Sprite, Container } from '@/engine'
 import { LevelState, HurtEntityAction, Item } from '../../level'
+import { EVENT_SPAWN_EFFECT } from '../Effect'
 import Assets from '../../Assets'
 
 export function ProjectileView(props: any) {
@@ -44,18 +45,24 @@ export function ProjectileView(props: any) {
             }))
         )
 
-        // ...and then the projectile itself
+        // ...then the projectile itself
         level.commit(new HurtEntityAction({
             entityId: props.entity.id,
             damage: 1,
         }))
+
+        // Finally, spawn an impact effect
+        level.emit(EVENT_SPAWN_EFFECT, item.getImpactEffect(), new Point(
+            view.position.x + (level.CELL_SIZE / 2),
+            view.position.y + (level.CELL_SIZE / 2),
+        ))
     }
 
     gsap.timeline().timeScale(2)
         .to(view, { x: destination.x, y: destination.y, duration: 2, ease: Linear.easeNone })
         .to(billboard, { y: -400, duration: 1, ease: Power1.easeOut }, '<')
         .to(shadow.scale, { x: 0, y: 0, duration: 1, ease: Power1.easeOut }, '<')
-        .to(billboard, { y: -25, duration: 1, ease: Power1.easeIn }, 1)
+        .to(billboard, { y: -100, duration: 1, ease: Power1.easeIn }, 1)
         .to(shadow.scale, { x: 0.5, y: 0.5, duration: 1, ease: Power1.easeOut }, '<')
         .call(onImpact)
 

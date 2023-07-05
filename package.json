@@ -14,6 +14,7 @@
     "vite-tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
+    "@pixi/particle-emitter": "^5.0.8",
     "eventemitter3": "^5.0.1",
     "gsap": "^3.11.5",
     "nanoid": "^4.0.2",

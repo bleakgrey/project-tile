@@ -23,9 +23,16 @@ export abstract class Scene extends Container {
             })
 
             for (const url of Object.values(this.assets)) {
-                if (!url.includes('.atlas') && Loader.shared.resources[url] == undefined) {
-                    loader.add(url, url)
-                }
+                // Do not load inline assets
+                if (typeof url == 'object') continue
+
+                // Do not load inline spine atlases
+                if (url.includes('.atlas')) continue
+
+                // Do not load already present assets
+                if (Loader.shared.resources[url] !== undefined) continue
+
+                loader.add(url, url)
             }
             loader.load()
         })

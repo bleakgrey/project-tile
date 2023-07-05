@@ -18,6 +18,12 @@ import SHOOT_ICON from '@/assets/images/icons/shoot.png?url'
 import ROTATE_ICON from '@/assets/images/icons/rotate.png?url'
 import TARGET_ICON from '@/assets/images/icons/target.png?url'
 
+import SWIRL from '@/assets/images/swirl.png?url'
+
+import IMPACT_EFFECT from '@/assets/particles/impact.json'
+import EXPLOSION_EFFECT from '@/assets/particles/explosion.json'
+import SLAP_EFFECT from '@/assets/particles/slap.json'
+
 export default {
     PRIDI,
     PRIDI_PAGE,
@@ -38,4 +44,10 @@ export default {
     SHOOT_ICON,
     ROTATE_ICON,
     TARGET_ICON,
+
+    SWIRL,
+
+    IMPACT_EFFECT,
+    EXPLOSION_EFFECT,
+    SLAP_EFFECT,
 }
