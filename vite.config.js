@@ -25,7 +25,7 @@ export default defineConfig({
         assetsDir: './assets',
         outDir: '../dist',
         emptyOutDir: true,
-        sourcemap: true,
+        // sourcemap: true,
         rollupOptions: {
             output: {
                 assetFileNames: (asset) => {
