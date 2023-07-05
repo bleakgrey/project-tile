@@ -1,5 +1,5 @@
 import { gameInstance } from '@'
-import { jsx, Container, Label } from '@/engine'
+import { jsx, Container, Label, Sprite } from '@/engine'
 import { ItemRegistry } from '../../level/items/ItemRegistry.tsx'
 import { ShootButton } from './ShootButton'
 import { Selector } from './Selector'
@@ -20,15 +20,16 @@ export function UI() {
         /> */}
 
         <RotateButton x={140} y={180} />
-        <Selector ref={(n) => refs.selector = n} items={Object.values(ItemRegistry)} />
-        <ShootButton ref={(n) => refs.shoot = n} />
-        <Label ref={(n) => refs.heading = n}
-            x={1920 / 2}
-            y={125}
-            anchor={{ x: 0.5, y: 0.5 }}
-            text={''}
-            style={{ fontSize: 80 }}
-        />
+        <Selector ref={n => refs.selector = n} items={Object.values(ItemRegistry)} />
+        <ShootButton ref={n => refs.shoot = n} />
+
+        <Sprite x={1920 / 2} y={125}>
+            <Label ref={n => refs.heading = n}
+                anchor={{ x: 0.5, y: 0.5 }}
+                text={''}
+                style={{ fontSize: 80 }}
+            />
+        </Sprite>
     </Container>
 
     refs.selector.pivot.set(

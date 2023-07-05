@@ -11,8 +11,7 @@ export function ProjectileView(props: any) {
     let billboard!: Sprite2d, shadow!: Sprite2d
 
     const level: LevelState = getStore(KnownStores.LEVEL_STATE)
-    const destination: Point = props.entity.data.destination
-    const item: Item = props.entity.data.item
+    const { destination, item, sender } = props.entity.data
 
     const view = <Sprite name={'Projectile'}>
         <Container x={level.CELL_SIZE / 2} y={level.CELL_SIZE / 2} scale={{ x: 1, y: 1 }}>
@@ -48,7 +47,7 @@ export function ProjectileView(props: any) {
     })
 
     // Spawn indicators to prompt the affected range
-    level.emit(EVENT_HIGHLIGHT_TILE, impactTiles)
+    level.emit(EVENT_HIGHLIGHT_TILE, impactTiles, sender.data.color)
 
     const onImpact = () => {
         // Damage all entities in range...

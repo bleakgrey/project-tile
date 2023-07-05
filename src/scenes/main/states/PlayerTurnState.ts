@@ -1,5 +1,5 @@
 import { lerp } from "@/engine"
-import { DisplayObject, Point } from "pixi.js"
+import { BitmapText, DisplayObject, Point } from "pixi.js"
 import { gsap, Elastic, Linear } from 'gsap'
 import { ChangeTurnAction, EntityIds, PlaceEntityAction, EVENT_ENTITY_HURT } from "../level"
 import { SceneState } from "./SceneStates"
@@ -11,9 +11,6 @@ export class PlayerTurnState extends SceneState {
     bounceAnim!: GSAPAnimation
     chargeAnim!: GSAPAnimation
     hideSelectorAnim!: GSAPAnimation
-
-    btn: DisplayObject
-    selector: any
 
     charger = {
         power: 0,
@@ -27,8 +24,6 @@ export class PlayerTurnState extends SceneState {
 
     constructor(scene: MainScene) {
         super(scene)
-        this.btn = this.scene.view!.refs.ui.refs.shoot
-        this.selector = this.scene.view!.refs.ui.refs.selector
     }
 
     canEnter() {
@@ -36,9 +31,10 @@ export class PlayerTurnState extends SceneState {
     }
 
     onEnter() {
-        this.level.once(EVENT_ENTITY_HURT, this.onDamaged, this)
+        this.headingAnim.play(0)
         gsap.timeline()
             .call(() => {
+                this.heading.text = Strings.player_turn
                 this.selector.interactiveChildren = true
                 this.btn.setText(Strings.press_to_charge)
                 this.btn.setFill(0)
@@ -111,23 +107,28 @@ export class PlayerTurnState extends SceneState {
     }
 
     launch() {
+        this.level.once(EVENT_ENTITY_HURT, this.onDamaged, this)
+
         const item = this.selector.getActive()
         const power = this.charger.power * item.lightness
 
         // Calculate the trajectory
         const startPos = this.level.tileToPos(this.level.entities[EntityIds.PLAYER].coords)
         const endPos = this.level.tileToPos(this.level.entities[EntityIds.ENEMY].coords)
-        const destination = new Point(
-            lerp(startPos.x, endPos.x, power),
-            lerp(startPos.y, endPos.y, power),
-        )
 
         // Spawn the projectile entity
         this.level.commit(new PlaceEntityAction({
             id: EntityIds.PROJECTILE,
             coords: this.level.entities[EntityIds.PLAYER].coords,
             health: 1,
-            data: { item, destination },
+            data: {
+                item,
+                destination: new Point(
+                    lerp(startPos.x, endPos.x, power),
+                    lerp(startPos.y, endPos.y, power),
+                ),
+                sender: this.level.entities[EntityIds.PLAYER]
+            },
             createRenderer: entity => ProjectileView({ entity })
         }))
     }
@@ -139,6 +140,7 @@ export class PlayerTurnState extends SceneState {
     }
 
     onLeave() {
+        this.level.off(EVENT_ENTITY_HURT, this.onDamaged, this)
         this.bounceAnim.kill()
         this.chargeAnim.kill()
     }

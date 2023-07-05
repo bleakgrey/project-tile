@@ -23,8 +23,8 @@ export default class MainScene extends Scene {
 
         // Create a state machine to handle the gameplay logic
         this.sm = new StateMachine([
-            new PlayerTurnState(this),
             new OpponentTurnState(this),
+            new PlayerTurnState(this),
             new WinnerState(this),
         ])
 

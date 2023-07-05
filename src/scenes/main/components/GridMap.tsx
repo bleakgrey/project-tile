@@ -88,7 +88,7 @@ export const GridMap: NodeConstructor = (props, children, refs) => {
     })
 
     // Spawn tile highlights
-    level.on(EVENT_HIGHLIGHT_TILE, (cells: Point[]) => {
+    level.on(EVENT_HIGHLIGHT_TILE, (cells: Point[], color: number) => {
         const overlays = []
         cells.forEach(cell => {
             const { x, y } = level.tileToPos(cell)
@@ -98,8 +98,7 @@ export const GridMap: NodeConstructor = (props, children, refs) => {
                 width={level.CELL_SIZE}
                 height={level.CELL_SIZE}
                 texture={Assets.TARGET_ICON}
-                blendMode={BLEND_MODES.SCREEN}
-                tint={0xFFEA00}
+                tint={color}
             />
             refs.tileLayer.addChild(overlay)
             overlays.push(overlay)

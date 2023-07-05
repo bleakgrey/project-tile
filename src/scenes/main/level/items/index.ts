@@ -1,2 +1,2 @@
 export * from './Item'
-export * from './ItemRegistry.tsx'
+export * from './ItemRegistry'

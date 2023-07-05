@@ -5,6 +5,8 @@
     "too_late": "TOO LATE...",
     "lost": "YOU LOST...",
     "win": "YOU WON!",
+    "player_turn": "YOUR TURN",
+    "opponent_turn": "OPPONENT TURN",
     "explosive_item": "Bomb",
     "heavy_item": "Weight",
     "useless_item": "Carrot"
