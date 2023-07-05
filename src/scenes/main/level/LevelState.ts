@@ -60,7 +60,10 @@ export class LevelState extends EventEmitter {
 
     public posToTile(pos: Point) {
         const { x, y } = pos
-        return new Point(x / this.CELL_SIZE, y / this.CELL_SIZE)
+        return new Point(
+            Math.floor(x / this.CELL_SIZE),
+            Math.floor(y / this.CELL_SIZE),
+        )
     }
     public tileToPos(coords: Point) {
         const { x, y } = coords

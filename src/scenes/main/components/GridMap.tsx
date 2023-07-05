@@ -1,9 +1,12 @@
-import { DisplayObject, Point } from 'pixi.js'
+import { BLEND_MODES, DisplayObject, Point } from 'pixi.js'
 import { gameInstance } from '@'
-import { getStore, jsx, NodeConstructor, KnownStores, Container, Sprite } from '@/engine'
+import { gsap } from 'gsap'
+import { getStore, jsx, NodeConstructor, KnownStores, Container, Sprite, getTexture } from '@/engine'
 import { EVENT_PROP_CHANGED, LevelState } from '../level'
-import Assets from '../Assets'
 import { EVENT_SPAWN_EFFECT } from './Effect'
+import Assets from '../Assets'
+
+export const EVENT_HIGHLIGHT_TILE = 'highlightTile'
 
 export const GridMap: NodeConstructor = (props, children, refs) => {
     const entityRenderers: DisplayObject[] = []
@@ -82,6 +85,27 @@ export const GridMap: NodeConstructor = (props, children, refs) => {
         if (!effect) return
         refs.effectLayer.addChild(effect)
         effect.position.set(pos.x, pos.y)
+    })
+
+    // Spawn tile highlights
+    level.on(EVENT_HIGHLIGHT_TILE, (cells: Point[]) => {
+        const overlays = []
+        cells.forEach(cell => {
+            const { x, y } = level.tileToPos(cell)
+            const overlay = <Sprite
+                x={x}
+                y={y}
+                width={level.CELL_SIZE}
+                height={level.CELL_SIZE}
+                texture={Assets.TARGET_ICON}
+                blendMode={BLEND_MODES.SCREEN}
+                tint={0xFFEA00}
+            />
+            refs.tileLayer.addChild(overlay)
+            overlays.push(overlay)
+        })
+        gsap.timeline({ repeat: 1, yoyo: true, repeatDelay: 0.5 })
+            .fromTo(overlays, { alpha: 0 }, { alpha: 1 })
     })
 
     return node

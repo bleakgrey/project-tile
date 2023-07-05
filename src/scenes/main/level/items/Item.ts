@@ -15,7 +15,7 @@ export class Item {
     lightness: number = 1
 
     // What tiles will this item affect?
-    range: Point[] = [new Point(0, 0)]
+    range: Point[] = []
 
     // What effect should be shown on impact?
     getImpactEffect: EffectConstructor = () => null
